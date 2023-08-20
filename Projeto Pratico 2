@@ -1,0 +1,61 @@
+//Projeto Pratico de AP2
+//Alunos:Thiago Valentin Rodrigues
+//Cadastro de Novos funcionarios e calculo do decimo terceiro com a soma de todos eles no final, tambem coloquei uma regra para o cpf ter 11 digitos, caso não tenha onze digitos ou tenha mais que isso, apresente uma mensagem de erro.
+
+#include <stdio.h>
+#include <string.h>
+
+
+struct Employee {
+    char cpf[12];
+    char name[50];
+    float salary;
+    float thirteenthSalary;
+};
+
+
+float calculateThirteenthSalary(float salary) {
+    return salary / 12;
+}
+
+int main() {
+    int numEmployees;
+    printf("Coloque o numero de funcionarios: ");
+    scanf("%d", &numEmployees);
+
+    struct Employee employees[numEmployees];
+    float totalThirteenthSalary = 0;
+
+    for (int i = 0; i < numEmployees; i++) {
+        printf("\nFuncionario %d\n", i + 1);
+
+        printf("CPF (11 digitos): ");
+        scanf("%s", employees[i].cpf);
+
+     
+        if (strlen(employees[i].cpf) != 11) {
+            printf("Erro: CPF deve apresentar 11 digitos.\n");
+            return 1;  
+        }
+
+        printf("Nome: ");
+        scanf(" %[^\n]", employees[i].name);
+
+        printf("Salario: ");
+        scanf("%f", &employees[i].salary);
+
+        employees[i].thirteenthSalary = calculateThirteenthSalary(employees[i].salary);
+        totalThirteenthSalary += employees[i].thirteenthSalary;
+    }
+
+    printf("\nNota de pagamento:\n");
+    for (int i = 0; i < numEmployees; i++) {
+        printf("\nFuncionario: %s\n", employees[i].name);
+        printf("Salario: %.2f\n", employees[i].salary);
+        printf("Decimo terceiro: %.2f\n", employees[i].thirteenthSalary);
+    }
+
+    printf("\nTotal dos decimos terceiros: %.2f\n", totalThirteenthSalary);
+
+    return 0;
+}
